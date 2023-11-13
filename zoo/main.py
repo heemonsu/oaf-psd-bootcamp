@@ -15,10 +15,8 @@ Run your code by creating instances of all classes, calling all methods at least
 """
 
 from abc import ABC, abstractmethod
-
-if __name__ == '__main__':
-
-    # define base class
+def main():
+     # define base class
     class Animal(ABC):
         """An abstract base/parent class for Animal objects"""
         def __init__(self, name, age):
@@ -117,3 +115,8 @@ if __name__ == '__main__':
     # Override Animals speak method for each animal in the zoo
     print("\nWhat do the zoo animals say?")
     zoo.speak_all()
+
+if __name__ == '__main__':
+    main()
+
+   
