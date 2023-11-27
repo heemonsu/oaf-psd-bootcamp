@@ -10,7 +10,7 @@ class Animal():
 class Cat(Animal):
     def speak(self) -> None:
         print("I am a cat. Meow.")
-        
+
 class Dog(Animal):
     def speak(self) -> None:
         print("I am a dog. Woof.")
@@ -28,10 +28,10 @@ class Zoo():
 class ZooKeeper():
     def __init__(self, Zoo: Zoo) -> None:
         self.Zoo = Zoo
-    
-    def addAnimal(self, Animal: Animal) -> None:
+
+    def add_animal(self, Animal) -> None:
         self.Zoo.list.append(Animal)
-            
+
 spiffy = Cat("spiffy", 32)
 spiffy.who()
 #spiffy.speak()
