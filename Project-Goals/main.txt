@@ -1,0 +1,20 @@
+Steve Eckardt
+oa professional software development bootcamp
+revised: November 27th, 2023
+Session 4, Project Goals
+
+Define application goals:
+    The overall goal is to to pull historical temperature data from API server and use them to generate line graphs.
+    Data Source: open-meteo.com API weather data
+    Data Storage: Panda dataframes within the program and CSV files on the local hard drive.
+    Data Utilization: matplotlib graphs showing historical patterns and changes.
+
+Test functionality of handler, mocked service and API-calling service with print statements:
+    Using the example program from the open-meteo.com I was able to pull temperature data for the past 2 weeks and create a line graph demonstrating functionality.
+
+Files used to demonstrate functionality:
+    hourly_temperatures.py
+    hourly_temperatures.csv
+    Hourly Temperature Over Time.png
+    
+Can be found in the following Repository:
