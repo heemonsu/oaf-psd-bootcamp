@@ -37,33 +37,6 @@ class WeatherDatabase:
         self.conn.commit() 
         print("Database deleted!")
 
-
-    def insert_data(self, city, temperature, conditions):
-        """
-        Insert weather data into the database.
-        """
-        # Get current timestamp
-        timestamp = datetime.now()
-
-        # Insert data into the database
-        self.cursor.execute('''
-            SELECT * FROM weather
-            WHERE city = ?
-            ORDER BY timestamp DESC
-            LIMIT 1
-        ''', (city,))
-        data = self.cursor.fetchone()
-
-        # Check if data exists and if it is older than 24 hours before inserting
-        if data and datetime.strptime(data[4], "%Y-%m-%d %H:%M:%S") > timestamp - timedelta(hours=24):
-            return data
-        else:
-            self.cursor.execute('''
-                INSERT INTO weather (city, temperature, conditions, timestamp)
-                VALUES (?, ?, ?, ?)
-            ''', (city, temperature, conditions, timestamp.strftime("%Y-%m-%d %H:%M:%S")))
-            self.conn.commit()
-
     def get_weather_data(self, weather_service, city):
         """
         Retrieve weather data for a specific city.
