@@ -1,6 +1,7 @@
 import requests
 import random
 import sqlite3
+import matplotlib.pyplot as plt
 
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
@@ -42,7 +43,9 @@ class ApiService(AbstractWeatherService):
             json_data = response.json()
 
             hourly_data = json_data.get("hourly", {})
+            # print(hourly_data)
             temperature = hourly_data.get("temperature_2m", [])
+            # print(temperature)
             return temperature
 
 class MockService(AbstractWeatherService):
@@ -67,15 +70,19 @@ class DataSourceHandler():
             self.service = service
             self.visualization_handler = visualization_handler
 
-    # could use mathplotlib to visualize data
-        # def do_other_thing(self, recent_weather: list):
+        # use mathplotlib to visualize data
+        def do_other_thing(self, recent_weather: list):
             # print(recent_weather)
-            # forward to data storage handler
+            plt.plot(recent_weather)
+            plt.ylabel('Temperature at 2 meters (\u00B0C)')
+            plt.xlabel('Hour')
+            plt.title('Hourly Forecast for ')
+            plt.show()
         
         def resolve_weather(self, longitude: float, latitude: float):
             resolved_recent_weather = self.service.get_weather(longitude, latitude)
-            # self.do_other_thing(resolved_recent_weather)
-            self.visualization_handler.visualize_data(resolved_recent_weather)
+            self.do_other_thing(resolved_recent_weather)
+            # self.visualization_handler.visualize_data(resolved_recent_weather)
 
 class WeatherDatabase:
     def __init__(self, db_file):
@@ -124,13 +131,13 @@ if __name__ == "__main__":
         # use a factory to build the service
         useable_service = ServiceFactory.buildService(SERVICE_REFERENCE)
 
-        # data handler gets service injected like a dependency
+        # data handler gets service injected as a dependency
         data_handler = DataSourceHandler(useable_service, VisualizationHandler())
 
         # use some data and call the program
         latitude = 37.7723281
         longitude = -122.4530167
+        data_handler.resolve_weather(longitude, latitude)
         # db = WeatherDatabase(DB_FILE)
         # service = 
-        data_handler.resolve_weather(longitude, latitude)
         # weather_data = db.get_weather_data(service, longitude, latitude)
