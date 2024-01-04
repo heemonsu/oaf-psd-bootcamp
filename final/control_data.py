@@ -15,6 +15,7 @@ conn = sqlite3.connect(sqlite_file)
 
 column_names = ['Year', 'Mean', 'Max', 'Min', 'Std']
 annual_df = pd.DataFrame(columns=column_names)
+annual_df.set_index('Year', inplace=True)
 
 for year_index in range(1940, 2024):
     query = f"SELECT * FROM hourly_data WHERE strftime('%Y', date) = '{year_index}';"
@@ -38,14 +39,17 @@ for year_index in range(1940, 2024):
 
 annual_df['Mean+Std'] = annual_df['Mean'] + annual_df['Std']
 annual_df['Mean-Std'] = annual_df['Mean'] - annual_df['Std']
-
-new_order = ['Year', 'Max', 'Mean+Std', 'Mean', 'Mean-Std', 'Min', 'Std']
+new_order = ['Max', 'Mean+Std', 'Mean', 'Mean-Std', 'Min', 'Std']
 annual_df = annual_df[new_order]
 
 annual_df.to_sql('annual_data', conn, if_exists='replace')
 
+
+
+
 column_names[0] = 'Decade'
 decadal_df = pd.DataFrame(columns=column_names)
+decadal_df.set_index('Decade', inplace=True)
 
 for start_year in range(1940, 2011, 10):
     end_year = start_year + 9
@@ -70,8 +74,6 @@ for start_year in range(1940, 2011, 10):
 
 decadal_df['Mean+Std'] = decadal_df['Mean'] + decadal_df['Std']
 decadal_df['Mean-Std'] = decadal_df['Mean'] - decadal_df['Std']
-
-new_order[0] = 'Decade'
 decadal_df = decadal_df[new_order]
 
 decadal_df.to_sql('decadal_data', conn, if_exists='replace')

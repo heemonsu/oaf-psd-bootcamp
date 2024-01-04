@@ -21,7 +21,7 @@ conn.close()
 
 annual_df = annual_df.drop('Std', axis=1)
 x = annual_df['Year']
-for column in annual_df.columns[2:]:
+for column in annual_df.columns[1:]:
     plt.plot(x, annual_df[column], linestyle='-', label=column)
 plt.xlabel('Year')
 plt.ylabel('Temperatures in Celsius')
@@ -32,7 +32,7 @@ plt.show()
 
 x = decadal_df['Decade']
 decadal_df = decadal_df.drop('Std', axis=1)
-for column in decadal_df.columns[2:]:
+for column in decadal_df.columns[1:]:
     plt.plot(x, decadal_df[column], linestyle='-', label=column)
 plt.xlabel('Decade')
 plt.ylabel('Temperatures in Celsius')
